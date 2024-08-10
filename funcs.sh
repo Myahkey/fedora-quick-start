@@ -6,9 +6,9 @@ pwdless_sudo () {
 }
 
 import_repos () {
-    echo "Installing dependencies...";
+    echo "\n\n\nInstalling dependencies...";
     sudo dnf -y install dnf-plugins-core distribution-gpg-keys;
-    echo "Installing repositories...";
+    echo "\n\n\nInstalling repositories...";
     sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
     sudo dnf install "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm" "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm";
     sudo dnf config-manager --enable fedora-cisco-openh264;
@@ -24,46 +24,56 @@ import_repos () {
 }
 
 configure_flatpak () {
+    echo "\n\n\nConfiguring Flathub...";
     flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo;
 }
 
 install_dnf_packages () {
+    echo "\n\n\nUpdating installed packages...";
     sudo dnf update -y;
+    echo "\n\n\nInstalling RPM packages...";
     sudo dnf install -y $packages;
     sudo dnf install -y $docker_packages;
     sudo dnf install -y $gnome_shell_packages;
 }
 
 install_flatpak_packages () {
+    echo "\n\n\nInstalling Flatpak packages...";
     flatpak install -y --noninteractive flathub $flatpak_flathub_packages;
 }
 
 configure_docker () {
+    echo "\n\n\nConfiguring Docker...";
     sudo systemctl enable --now docker;
     sudo groupadd docker;
     sudo usermod -aG docker $USER;
 }
 
 configure_v2ray () {
+    echo "\n\n\nConfiguring v2ray...";
     sudo systemctl enable --now v2raya.service;
 }
 
 configure_git () {
+    echo "\n\n\nConfiguring git...";
     git config --global user.name "Nikita Lomaev";
     git config --global user.email "nikita.lomaev@rktv.ru"
 }
 
 install_nccm () {
+    echo "\n\n\nInstalling nccm pip package...";
     git clone https://github.com/flyingrhinonz/nccm nccm.git;
     cd nccm.git/nccm/ || return;
     sudo install -m 755 nccm -t /usr/local/bin/;
 }
 
 install_python_packages () {
+    echo "\n\n\nInstalling Python packages...";
     pip3 install --user $python_packages;
 }
 
 zsh_4_humans () {
+    echo "\n\n\nInstalling zsh4humans...";
     if command -v curl >/dev/null 2>&1; then
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/romkatv/zsh4humans/v5/install)"
     else

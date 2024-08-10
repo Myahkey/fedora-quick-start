@@ -1,8 +1,4 @@
 #!/bin/bash
-
-# Fedora Quick Start is my personal Bash script for initial installs of Fedora with my necessary customizations.
-# Currently developed for Fedora 40.
-
 source vars.sh;
 
 pwdless_sudo () {

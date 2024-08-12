@@ -42,14 +42,6 @@ install_anytype () {
     sudo dnf install -y https://anytype-release.fra1.cdn.digitaloceanspaces.com/anytype-0.42.3.x86_64.rpm;
 }
 
-enable_services () {
-    echo "\n\n\nEnabling services...";
-    for service in "${!services[@]}"
-    do
-        sudo systemctl enable --now $service
-    done
-}
-
 install_flatpak_packages () {
     echo "\n\n\nInstalling Flatpak packages...";
     flatpak install -y --noninteractive flathub $flatpak_flathub_packages;
@@ -58,12 +50,14 @@ install_flatpak_packages () {
 configure_docker () {
     echo "\n\n\nConfiguring Docker...";
     sudo usermod -aG docker $USER;
-    sudo systemctl enable --now docker;
 }
 
-configure_v2ray () {
-    echo "\n\n\nConfiguring v2ray...";
-    sudo systemctl enable --now v2raya.service;
+enable_services () {
+    echo "\n\n\nEnabling services...";
+    for service in "${!services[@]}"
+    do
+        sudo systemctl enable --now $service
+    done
 }
 
 configure_git () {

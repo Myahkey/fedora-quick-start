@@ -37,6 +37,19 @@ install_dnf_packages () {
     sudo dnf install -y $gnome_shell_packages;
 }
 
+install_anytype () {
+    echo "\n\n\nInstalling Anytype...";
+    sudo dnf install -y https://anytype-release.fra1.cdn.digitaloceanspaces.com/anytype-0.42.3.x86_64.rpm;
+}
+
+enable_services () {
+    echo "\n\n\nEnabling services...";
+    for service in "${!services[@]}"
+    do
+        sudo systemctl enable --now $service
+    done
+}
+
 install_flatpak_packages () {
     echo "\n\n\nInstalling Flatpak packages...";
     flatpak install -y --noninteractive flathub $flatpak_flathub_packages;
@@ -44,9 +57,8 @@ install_flatpak_packages () {
 
 configure_docker () {
     echo "\n\n\nConfiguring Docker...";
-    sudo systemctl enable --now docker;
-    sudo groupadd docker;
     sudo usermod -aG docker $USER;
+    sudo systemctl enable --now docker;
 }
 
 configure_v2ray () {

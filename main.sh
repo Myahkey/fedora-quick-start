@@ -11,6 +11,8 @@ main () {
     import_repos;
     configure_flatpak;
     install_dnf_packages;
+    install_anytype;
+    enable_services;
     configure_docker;
     configure_v2ray;
     configure_git;
